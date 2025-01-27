@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
+<style>
+
+
+
+
+#TGcontainer {
+    height:5vh; width: 5vw;
+  
+    display: flex;flex-direction: row;
+}
+
+#TGholder {
+    height: 5vh; width:5vw; 
+    background-color:grey;
+    display: grid;
+    grid-row: 1fr 3fr 1fr;
+border-top-left-radius: 30%;
+border-bottom-left-radius: 30%;
+border-top-right-radius: 30%;
+border-bottom-right-radius:30%;
+}
+
+#TGslider 
+{
+height: 5vh;width: 5vh; border-radius: 50%; background-color: red;
+border-top-left-radius: 30%;
+border-bottom-left-radius: 30%;
+border-top-right-radius: 30%;
+border-bottom-right-radius:30%;
+/* display: flex;
+flex-direction: row; */
+color: white;
+margin-left:0vh;
+font-size: 4vh;
+display: flex;
+flex-direction: row;
+justify-content: center;
+cursor: pointer;
+}
+
+/*DARK MODE TOGGLE ENDS HERE */
+
+#linkinputbox {height: 40px;width: 510px;font-size: 25px;}
+#searchbar1outermostdiv{height: 40px;width:560px;display: flex;justify-content: space-around;}
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48; color: #000; transition: color 0.3s ease; } body.dark-mode .material-symbols-outlined { color: #fff;}
+#magicon {display: flex;flex-direction: column;justify-content: center;height: 40px;cursor: pointer;}
+
+#searchbar1outermostdiv {position: relative;top: 4vh;left:30vw ;}
+#translatetray {height: 40px;font-size:20px; width: 250px;cursor: pointer;}
+#secondline {display: flex;flex-direction: row; height: 40px;width: 700px;justify-content: space-between;
+position: relative;top:50px;left: 300px;
+}
+#summerisebtn {height: 40px;width: 250px;border: 2px solid black;cursor: pointer;}
+
+/* 3rd line means topic finder */
+
+#topicfinder {
+    height: 40px;width: 200px;position: relative;top: 70px;left: 550px;
+    display: flex;flex-direction: row;justify-content: center;align-items: center;font-size: 25px;font-weight: 400;
+}
+
+/* 4th line means output summerised text that can be copied easily */
+#output1txt {position:relative;left: 300px; top: 80px;}
+#outputtextarea {height: 300px;width: 700px;}
+#linefive {position: relative;top: 100px;left: 340px;width: 600px;display: flex;flex-direction: row;justify-content: space-between;font-size: 25px;align-items: center;}
+#keyworddiv {position: relative;left: 30px;}
+#pronouncebtn
+{
+    position:relative;left:60px;height: 50px;width: 70px;
+  
+}
+#sharebtn
+ { 
+    height: 50px;width: 70px;position: relative;left: 80px;
+   
+}
+#relatedblogsbtn { height: 50px;position:relative;left: 110px;}
+.linefivebtn 
+{
+    display:flex;justify-content: center;align-items: center;
+    border: 1px solid grey;
+}
+
+/* loader div */
+
+#loaderdiv
+{height: 40px;width: 40px;border-radius: 100%;
+border: 5px solid grey;border-right: 5px solid blue;
+position: relative;bottom:27vh;left:50vw;
+display: none;
+}
+#HINDItext{height: 300px;width: 500px;position:relative;top: 150px;left: 300px;display: none;}
+
+
+
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+    <!-- TOGGLE FOR DARK MODE -->
+    <div id="TGcontainer">
+        <!-- 
+         UNICODE CHRACTERS of SUM and MOON
+        MOON      &#x1F319
+        SUN       &#x2600; 
+        -->
+ <div id="TGholder">
+ <div></div>
+ <div id="TGslider">&#x2600</div>
+ 
+ </div>
+ </div>
+ <!-- TOGGLE FOR DARK MODE ENDS HERE -->
+<!-- URL PASTER STARTS HERE -->
+
+<div id="searchbar1outermostdiv">
+    <input type="text" id="linkinputbox" placeholder="Enter URL..."> 
+ <div id="magicon">
+    <span class="material-symbols-outlined">search</span>
+</div>
+</div>
+
+
+</div> 
+<!-- second line ends here  -->
+
+
+ <!-- now we will start translate to box means output box -->
+
+<div id="output1txt">
+<textarea name="" id="outputtextarea"></textarea>
+
+</div>
+
+
+ <div id="linefive">
+    <button id="toHINDI">TRANSLATE TO HINDI</button>
+
+
+<!-- <div id="pronouncebtn" class="linefivebtn">&#9654</div> -->
+<div id="inputFormdiv">
+<form id="inputForm">
+    <!-- <textarea id="inputTxt" rows="4" cols="50" placeholder="Type something..."></textarea> -->
+    <select id="voiceSelect"></select>
+    <button type="submit">Speak &#9654</button>
+  </form>
+</div>
+
+</div>
+<!-- ROTATOR -->
+ <div id="loaderdiv"></div>
+
+ <!-- TRANSLATE TO HINDI -->
+  <textarea name="" id="HINDItext"></textarea>
+
+
+</body>
+<script>
+
+
+
+//TOGGLE FOR DARK MODE STARTS HERE
+TGslider = document.querySelector("#TGslider")
+body = document.querySelector("body")
+let DKMODE = "Light"
+
+TGslider.addEventListener("click" , ()=>
+    {
+        if(DKMODE == "Light")
+        {
+            ToDarkMode() ;
+            DKMODE = "Dark"
+        }
+
+        else if (DKMODE == "Dark")
+{
+    ToLightMode();
+    DKMODE = "Light"
+}
+
+})
+function ToDarkMode()
+{
+TGslider.style.marginLeft = "6vh"
+TGslider.innerHTML = "&#x1F319"
+TGslider.style.color = "#808080"
+body.style.backgroundColor = "GREY"
+}
+
+
+function ToLightMode()
+{
+    TGslider.style.marginLeft = "0vh"
+    TGslider.innerHTML = "&#x2600"
+    TGslider.style.color = "white"
+    body.style.backgroundColor = "White" 
+    
+}
+//TOGGLE TO DARK MODE ENDS HERE
+
+
+//
+
+outputtext01 = document.querySelector("#outputtextarea")
+
+
+
+
+
+//TEXT SUMMERIZER from api3rapid2.ja
+inputurl = document.querySelector("#linkinputbox")
+fetchbtn = document.querySelector("#magicon")
+summerizedtext = document.querySelector("#outputtextarea")
+
+const baseurl1 ='https://article-extractor-and-summarizer.p.rapidapi.com/summarize?url='
+
+// function makeurl() 
+// { 
+// }
+
+fetchbtn.addEventListener("click",()=>{summerizeit() })
+
+
+const options = {
+	method: 'GET',
+	headers: {
+		'x-rapidapi-key': '6f7e8f9f58msh24b273edaa1744ep159e9cjsn498373d0f70b',
+		'x-rapidapi-host': 'article-extractor-and-summarizer.p.rapidapi.com'
+	}
+};
+
+const summerizeit = async() =>
+    {
+
+        const baseurl2 = inputurl.value 
+        const url = (baseurl1+baseurl2) ; console.log(url)
+
+
+        loadingonn()
+        const response = await fetch(url, options);
+
+        try {loadingoff();
+            console.log("resonse",response)
+            console.log("json of responsse  ")
+            const result = await response.json();
+            console.log(result);
+            summerizedtext.value = result.summary
+        } catch (error) {
+            console.error(error);
+        }
+
+        summerizedtext.value = result.summary
+    }
+
+    // LOADER div 
+    loaderdiv = document.querySelector("#loaderdiv")
+
+    function loadingonn()
+    { loaderdiv.style.display = "block" ;
+        const spintheloaderdiv =
+        [
+            {transform :"rotate(0deg)"} ,
+            {transform :"rotate(360deg)"},
+        ] ;
+        
+       const spinningtime = 
+       {
+        duration : 2000 ,
+        iterations : 10 ,
+
+       }
+
+       loaderdiv.animate(spintheloaderdiv , spinningtime)
+
+
+
+    }
+
+function loadingoff()
+{
+    loaderdiv.style.display = "none"
+}
+
+const synth = window.speechSynthesis;
+const inputForm = document.querySelector("#inputForm");
+const inputTxt = document.querySelector("#outputtextarea");
+const voiceSelect = document.querySelector("#voiceSelect");
+let voices = [];
+
+function populateVoiceList() {
+  voices = synth.getVoices();
+  voices.forEach((voice) => {
+    const option = document.createElement("option");
+    option.textContent = `${voice.name} (${voice.lang})`;
+    option.setAttribute("data-name", voice.name);
+    option.setAttribute("data-lang", voice.lang);
+    voiceSelect.appendChild(option);
+  });
+}
+
+populateVoiceList();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+
+inputForm.onsubmit = (event) => {
+  event.preventDefault();
+
+  const utterThis = new SpeechSynthesisUtterance(inputTxt.value);
+  const selectedOption = voiceSelect.selectedOptions[0].getAttribute("data-name");
+  voices.forEach((voice) => {
+    if (voice.name === selectedOption) {
+      utterThis.voice = voice;
+    }
+  });
+
+  synth.speak(utterThis);
+  inputTxt.blur();
+};
+
+toHINDI = document.querySelector("#toHINDI")
+HINDItextbox = document.querySelector("#HINDItext")
+//NOW TRANSLATE API 
+
+toHINDI.addEventListener("click", async () => {
+    const apiKey = "YEPUrwjyl-eP3jnpsxWb1GkEjeumzl1FdCyKP2aKzanc-3xO7T";
+    const apiHost = "AI-Translate.allthingsdev.co";
+    const apiEndpoint = "720ba733-ca3d-4e45-b1f8-67c18cbd5101";
+    const apiUrl = "https://AI-Translate.proxy-production.allthingsdev.co/api/translate";
+    
+    const myHeaders = new Headers({
+        "x-apihub-key": apiKey,
+        "x-apihub-host": apiHost,
+        "x-apihub-endpoint": apiEndpoint,
+        "Content-Type": "application/json"
+    });
+    
+    const requestBody = JSON.stringify({
+        from: "en",
+        to: "hi",
+        text: inputTxt.value
+    });
+    
+    try {
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: myHeaders,
+            body: requestBody,
+            redirect: "follow"
+        });
+        
+        const resultJson = await response.json();
+        HINDItextbox.value = resultJson.result;
+        HINDItextbox.style.display = "block";
+    } catch (error) {
+        console.error("Translation error:", error);
+    }
+});
+
+
+
+
+</script>
+</html>
